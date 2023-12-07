@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
-using Taxually.TechnicalTest.Controllers;
 using Taxually.TechnicalTest.Interfaces;
+using Taxually.TechnicalTest.Models;
 
 namespace Taxually.TechnicalTest.Strategies;
 
