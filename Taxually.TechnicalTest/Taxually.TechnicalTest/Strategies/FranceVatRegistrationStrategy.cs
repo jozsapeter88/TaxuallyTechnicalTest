@@ -15,10 +15,18 @@ public class FranceVatRegistrationStrategy : IVatRegistrationStrategy
 
     public async Task RegisterAsync(VatRegistrationRequest request)
     {
-        var csvBuilder = new StringBuilder();
-        csvBuilder.AppendLine("CompanyName,CompanyId");
-        csvBuilder.AppendLine($"{request.CompanyName}{request.CompanyId}");
-        var csv = Encoding.UTF8.GetBytes(csvBuilder.ToString());
-        await _queueClient.EnqueueAsync("vat-registration-csv", csv);
+        try
+        {
+            var csvBuilder = new StringBuilder();
+            csvBuilder.AppendLine("CompanyName,CompanyId");
+            csvBuilder.AppendLine($"{request.CompanyName}{request.CompanyId}");
+            var csv = Encoding.UTF8.GetBytes(csvBuilder.ToString());
+            await _queueClient.EnqueueAsync("vat-registration-csv", csv);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred during VAT registration: {ex.Message}");
+            throw;
+        }
     }
 }

@@ -15,12 +15,20 @@ public class GermanyVatRegistrationStrategy : IVatRegistrationStrategy
 
     public async Task RegisterAsync(VatRegistrationRequest request)
     {
-        using (var stringWriter = new StringWriter())
+        try
         {
-            var serializer = new XmlSerializer(typeof(VatRegistrationRequest));
-            serializer.Serialize(stringWriter, request);
-            var xml = stringWriter.ToString();
-            await _queueClient.EnqueueAsync("vat-registration-xml", xml);
+            using (var stringWriter = new StringWriter())
+            {
+                var serializer = new XmlSerializer(typeof(VatRegistrationRequest));
+                serializer.Serialize(stringWriter, request);
+                var xml = stringWriter.ToString();
+                await _queueClient.EnqueueAsync("vat-registration-xml", xml);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred during VAT registration: {ex.Message}");
+            throw;
         }
     }
 }

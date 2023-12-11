@@ -14,6 +14,14 @@ public class UKVatRegistrationStrategy : IVatRegistrationStrategy
     
     public async Task RegisterAsync(VatRegistrationRequest request)
     {
-        await _httpClient.PostAsync("https://api.uktax.gov.uk", request);
+        try
+        {
+            await _httpClient.PostAsync("https://api.uktax.gov.uk", request);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred during VAT registration: {ex.Message}");
+            throw;
+        }
     }
 }
