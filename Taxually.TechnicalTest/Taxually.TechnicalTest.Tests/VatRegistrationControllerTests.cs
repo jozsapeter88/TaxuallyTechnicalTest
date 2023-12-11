@@ -22,6 +22,7 @@ public class VatRegistrationControllerTests
 
         // Assert
         Assert.IsType<OkResult>(result);
+        vatRegistrationStrategyMock.Verify(strategy => strategy.RegisterAsync(request), Times.Once);
     }
 
     [Fact]
@@ -38,6 +39,7 @@ public class VatRegistrationControllerTests
 
         // Assert
         Assert.IsType<OkResult>(result);
+        vatRegistrationStrategyMock.Verify(strategy => strategy.RegisterAsync(request), Times.Once);
     }
 
     [Fact]
@@ -54,5 +56,6 @@ public class VatRegistrationControllerTests
 
         // Assert
         Assert.IsType<OkResult>(result);
+        vatRegistrationStrategyMock.Verify(strategy => strategy.RegisterAsync(request), Times.Once);
     }
 }
